@@ -1,0 +1,31 @@
+preAuthorizer: index.preAuthorizer
+authorizer: index.authorizer
+init: index.init
+getState: index.getState
+getInstanceId: index.getInstanceId
+methods:
+    - method: addMoney
+      tag: test
+      sync: true
+      steps:
+          - id: addMoney
+            
+    - method: spendMoney
+      tag: test
+      sync: true
+      steps:
+          - id: spendMoney
+            handler: index.spendMoneyHandler
+          - id: success
+          - id: insufficientFunds
+            handler: index.handler
+      flow:
+          - direction:
+                - spendMoney
+                - success
+          - id: gotoInsufficientFunds
+            direction:
+                - spendMoney
+                - insufficientFunds
+
+
